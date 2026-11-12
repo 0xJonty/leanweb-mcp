@@ -1,0 +1,36 @@
+# leanweb-mcp + SearXNG. Copy .env.example to .env and set SEARXNG_SECRET first.
+# MCP endpoint: http://127.0.0.1:8200/mcp (change LEANWEB_BIND / LEANWEB_PUBLISH_PORT in .env).
+services:
+  leanweb:
+    build: .
+    image: leanweb-mcp:0.1.0
+    depends_on:
+      - searxng
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # fixed inside the container; publish elsewhere with LEANWEB_BIND / LEANWEB_PUBLISH_PORT
+      LEANWEB_HOST: "0.0.0.0"
+      LEANWEB_PORT: "8200"
+      LEANWEB_CACHE_DIR: /data/cache
+      LEANWEB_SEARXNG_URL: "${LEANWEB_SEARXNG_URL:-http://searxng:8080}"
+    ports:
+      - "${LEANWEB_BIND:-127.0.0.1}:${LEANWEB_PUBLISH_PORT:-8200}:8200"
+    volumes:
+      - leanweb-cache:/data/cache
+    shm_size: 1g  # Chromium needs more than Docker's 64 MB default
+    restart: unless-stopped
+
+  # Upstream SearXNG image, unmodified (AGPL-3.0). Not published on the host; leanweb reaches it
+  # over the compose network.
+  searxng:
+    image: searxng/searxng:2026.11.5-3e95f6cd2
+    environment:
+      SEARXNG_SECRET: "${SEARXNG_SECRET:?set SEARXNG_SECRET in .env - generate one with: openssl rand -hex 32}"
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+    restart: unless-stopped
+
+volumes:
+  leanweb-cache:

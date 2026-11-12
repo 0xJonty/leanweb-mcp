@@ -1,0 +1,16 @@
+# Minimal SearXNG settings for leanweb-mcp. Anything not set here uses SearXNG's defaults.
+# Docs: https://docs.searxng.org/admin/settings/index.html
+use_default_settings: true
+
+server:
+  # Must be a random secret. docker-compose.yml passes SEARXNG_SECRET from .env, which overrides
+  # this value. If you run SearXNG some other way, replace it with the output of: openssl rand -hex 32
+  secret_key: "REPLACE_ME_WITH_A_RANDOM_HEX_STRING"
+  # The JSON API is used by a single local client, so SearXNG's bot limiter would only get in the way.
+  limiter: false
+  image_proxy: false
+
+search:
+  formats:
+    - html
+    - json
