@@ -25,4 +25,4 @@ Initial release.
 - Docker Compose setup with the upstream SearXNG image (pinned, unmodified) and a minimal settings file.
 - Unit tests that need no network, opt-in live tests, a stdlib-only smoke-test script and CI.
 
-[0.1.0]: https://github.com/OWNER/leanweb-mcp/releases/tag/v0.1.0
+[0.1.0]: https://github.com/0xJonty/leanweb-mcp/releases/tag/v0.1.0

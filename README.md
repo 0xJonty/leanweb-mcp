@@ -45,7 +45,7 @@ of tool definitions per request. leanweb's six tools take about 3.9K chars (~1K 
 Requires Docker with Compose v2.24+. The image is about 2.4 GB because it includes Chromium for the browser fallback.
 
 ```bash
-git clone https://github.com/OWNER/leanweb-mcp.git
+git clone https://github.com/0xJonty/leanweb-mcp.git
 cd leanweb-mcp
 cp .env.example .env
 sed -i "s/^SEARXNG_SECRET=.*/SEARXNG_SECRET=$(openssl rand -hex 32)/" .env
